@@ -1,0 +1,88 @@
+﻿<div *ngIf="requestDone" class="well">
+    <div *ngIf="!editMode" class="row">
+        <div class="col-xs-12">
+            <h2>{{ patient.name }} {{ patient.lastname }}</h2>
+            <p><span class="bold">Age:</span> {{ patient.age }}</p>
+            <p><span class="bold">Phone:</span> {{ patient.phone }}</p>
+            <p><span class="bold">Email:</span> {{ patient.email }}</p>
+            <p><span class="bold">Last Visit:</span> {{ patient.lastvisit | date: 'dd/MM/yyyy' }}</p>
+            <p><span class="bold">Next Visit:</span> {{ patient.nextvisit | date: 'dd/MM/yyyy' }}</p>
+
+            <form class="form-treatments">
+                <label>Treatments:</label>
+                <select name="treatments" [(ngModel)]="selectedTreatment" class="form-control">
+                    <option *ngFor="let treatment of patient.treatments" [ngValue]="treatment">
+                        {{ treatment.detail }}
+                    </option>
+                </select>
+            </form>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-md-6 col-lg-6">
+                    <button class="btn btn-success crud-btn">Add Treatment</button>
+                </div>
+                <div class="col-xs-12 col-sm-9 col-md-6 col-lg-6">
+                    <div class="pull-right">
+                        <button class="btn btn-warning crud-btn" (click)="editMode = true">Edit Patient</button>
+                        <button class="btn btn-danger crud-btn" (click)="deletePatient()">Delete Patient</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="editMode">
+        <div class="col-xs-12">
+            <form>
+                <div class="form-group">
+                    <label for="nameInput">Name:</label>
+                    <input id="nameInput" name="name" type="text" class="form-control" [(ngModel)]="editedPatient.name" />
+                </div>
+
+                <div class="form-group">
+                    <label for="lastNameInput">Last Name:</label>
+                    <input id="lastNameInput" name="lastName" type="text" class="form-control" [(ngModel)]="editedPatient.lastname" />
+                </div>
+
+                <div class="form-group">
+                    <label for="ageInput">Age:</label>
+                    <input id="ageInput" name="age" type="number" min="0" max="115" class="form-control" [(ngModel)]="editedPatient.age" />
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneInput">Phone:</label>
+                    <input id="phoneInput" name="phone" type="tel" class="form-control" [(ngModel)]="editedPatient.phone" />
+                </div>
+
+                <div class="form-group">
+                    <label for="emailInput">Email:</label>
+                    <input id="emailInput" name="email" type="email" class="form-control" [(ngModel)]="editedPatient.email" />
+                </div>
+
+                <div class="form-group">
+                    <label for="lastVisitInput">Last Visit:</label>
+                    <input id="lastVisitInput" name="lastVisit" type="date" class="form-control" [(ngModel)]="editedPatient.lastvisit" />
+                </div>
+
+                <div class="form-group">
+                    <label for="nextVisitInput">Next Visit:</label>
+                    <input id="nextVisitInput" name="nextVisit" type="date" class="form-control" [(ngModel)]="editedPatient.nextvisit" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" (click)="editPatient()">Done</button>
+                    <button class="btn btn-danger" value="Cancel" (click)="cancelEdition()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <app-treatment *ngIf="selectedTreatment !== undefined"
+                           [selectedTreatment]="selectedTreatment"
+                           (deletedTreatment)="selectedTreatment = undefined">
+            </app-treatment>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row" *ngIf="!editMode">
+            <div class="col-xs-12">
+                <h3 class="panel-title bold">{{ treatment.detail }}</h3>
+                <p><span class="bold">Start Date:</span> {{ treatment.startdate | date: 'dd/MM/yyyy' }}</p>
+                <p><span class="bold">End Date:</span> {{ treatment.enddate | date: 'dd/MM/yyyy' }}</p>
+                <p><span class="bold">Price:</span> {{ treatment.price }}</p>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-success crud-btn" (click)="editMode = true">Edit Treatment</button>
+                        <button class="btn btn-danger crud-btn" (click)="deleteTreatment()">Delete Treatment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="editMode">
+            <div class="col-xs-12">
+                <form>
+                    <div class="form-group">
+                        <label for="startDateInput">Start Date:</label>
+                        <input id="startDateInput" name="startDate" type="date" class="form-control" [(ngModel)]="editedTreatment.startdate" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDateInput">End Date:</label>
+                        <input id="endDateInput" name="endDate" type="date" class="form-control" [(ngModel)]="editedTreatment.enddate" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="priceInput">Price:</label>
+                        <input id="priceInput" name="price" type="number" min="0" class="form-control" [(ngModel)]="editedTreatment.price" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detailInput">Detail:</label>
+                        <input id="detailInput" name="detail" type="text" class="form-control" [(ngModel)]="editedTreatment.detail" />
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" (click)="editTreatment()">Done</button>
+                        <button class="btn btn-danger" value="Cancel" (click)="cancelEdition()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

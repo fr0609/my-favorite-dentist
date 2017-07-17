@@ -1,0 +1,40 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="page-header">
+                <h1>Patients</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+            <div class="row patient-card" *ngFor="let patient of patients; let i=index;">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" (click)="showPatient(i)">
+                    <h4 class="media-heading">{{ patient.name }} {{ patient.lastname }}</h4>
+                    <span>{{ patient.phone }}</span>
+                </div>
+            </div>
+
+            <div class="btn-group pagination-container" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" (click)="getPatients('first')">&laquo; First</button>
+                <button type="button" class="btn btn-default" (click)="getPatients('previous')">Previous</button>
+                <button type="button" class="btn btn-default" (click)="getPatients('next')">Next</button>
+                <button type="button" class="btn btn-default" (click)="getPatients('last')">Last &raquo;</button>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+            <app-patient 
+                         *ngIf="isPatientSelected; else selectPatient"
+                         [patientUrl]="patientUrl"
+                         (deletedPatient)="isPatientSelected = false">
+            </app-patient>
+            <ng-template #selectPatient>
+                <h4>Please select a patient!</h4>
+            </ng-template>
+        </div>
+    </div>
+
+</div>
